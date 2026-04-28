@@ -89,33 +89,38 @@ function makeDraggable(el) {
     let isDragging = false;
     let offsetX, offsetY;
 
-    el.addEventListener("mousedown", (e) => {
+    function start(e) {
         if (el.dataset.locked === "true") return;
 
         isDragging = true;
-        offsetX = e.clientX - el.offsetLeft;
-        offsetY = e.clientY - el.offsetTop;
-    });
 
-    document.addEventListener("mousemove", (e) => {
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+        offsetX = clientX - el.offsetLeft;
+        offsetY = clientY - el.offsetTop;
+    }
+
+    function move(e) {
         if (!isDragging) return;
 
-        el.style.left = (e.clientX - offsetX) + "px";
-        el.style.top = (e.clientY - offsetY) + "px";
-    });
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
 
-    document.addEventListener("mouseup", (e) => {
+        el.style.left = (clientX - offsetX) + "px";
+        el.style.top = (clientY - offsetY) + "px";
+    }
+
+    function end(e) {
         if (!isDragging || el.dataset.locked === "true") return;
         isDragging = false;
 
         const correctX = el.dataset.correctX * pieceSize;
         const correctY = el.dataset.correctY * pieceSize;
 
-        // current pospiece
         const currentX = el.offsetLeft;
         const currentY = el.offsetTop;
 
-        // distance from correct spot
         const dx = currentX - correctX;
         const dy = currentY - correctY;
         const distance = Math.sqrt(dx * dx + dy * dy);
@@ -123,19 +128,25 @@ function makeDraggable(el) {
         const SNAP_DISTANCE = 40;
 
         if (distance < SNAP_DISTANCE) {
-
             el.style.left = correctX + "px";
             el.style.top = correctY + "px";
-
-            //locked peices
             el.dataset.locked = "true";
             el.style.cursor = "default";
             el.style.border = "2px solid magenta";
         }
+    }
 
-        
-    });
+    // Mouse events
+    el.addEventListener("mousedown", start);
+    document.addEventListener("mousemove", move);
+    document.addEventListener("mouseup", end);
+
+    // Touch events
+    el.addEventListener("touchstart", start);
+    document.addEventListener("touchmove", move);
+    document.addEventListener("touchend", end);
 }
+
 </script>
 
 </body>
