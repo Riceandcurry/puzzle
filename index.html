@@ -1,154 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html style="background-color: #1d3557;">
+<link rel="stylesheet" href="style.css">
+
 <head>
     <title>PUZZLE GAME</title>
-    <style>
-        body {
-            font-family: Arial;
-            text-align: center;
-            touch-action: none;
-        }
 
-        #board {
-            width: 300px;
-            height: 300px;
-            margin: auto;
-            position: relative;
-            background-color: cornflowerblue;
-            border: 2px solid black;
-        }
-
-        table {
-            border-collapse: collapse;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-
-        td {
-            width: 100px;
-            height: 100px;
-            
-        }
-        .piece {
-            width: 100px;
-            height: 100px;
-            position: absolute;
-            background-image: url('bg.png');
-            background-size: 300px 300px;
-            cursor: move;
-            border: 1px solid black;
-        }
-    </style>
 </head>
 
 <body>
+    <div style="background-color: rgba(168, 218, 220, 0.5);">
+        <h2>PUZZLE GAME</h2>
+        <p>Drag pieces into the correct spots</p>
+    </div>
+    <div id="board">
+        <table>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
 
-<h2>PUZZLE GAME</h2>
-<p>Drag pieces into the correct spots</p>
-
-<div id="board">
-    <table>
-        <tr><td></td><td></td><td></td></tr>
-        <tr><td></td><td></td><td></td></tr>
-        <tr><td></td><td></td><td></td></tr>
-    </table>
-</div>
-
-<script>
-const board = document.getElementById("board");
-const pieceSize = 100;
-
-const image = new Image();
-image.onload = createPieces;
-image.src = "bg.png";
-
-function createPieces() {
-    for (let y = 0; y < 3; y++) {
-        for (let x = 0; x < 3; x++) {
-
-            let piece = document.createElement("div");
-            piece.className = "piece";
-
-            piece.dataset.correctX = x;
-            piece.dataset.correctY = y;
-            piece.dataset.locked = "false";
-
-            piece.style.backgroundPosition = `-${x * pieceSize}px -${y * pieceSize}px`;
-
-            piece.style.left = Math.random() * 100 + "px";
-            piece.style.top = Math.random() * 100 + "px";
-
-            makeDraggable(piece);
-
-            board.appendChild(piece);
-        }
-    }
-}
-
-function makeDraggable(el) {
-    let isDragging = false;
-    let offsetX, offsetY;
-
-    function start(e) {
-        if (el.dataset.locked === "true") return;
-
-        isDragging = true;
-
-        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-
-        offsetX = clientX - el.offsetLeft;
-        offsetY = clientY - el.offsetTop;
-    }
-
-    function move(e) {
-        if (!isDragging) return;
-
-        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-
-        el.style.left = (clientX - offsetX) + "px";
-        el.style.top = (clientY - offsetY) + "px";
-    }
-
-    function end(e) {
-        if (!isDragging || el.dataset.locked === "true") return;
-        isDragging = false;
-
-        const correctX = el.dataset.correctX * pieceSize;
-        const correctY = el.dataset.correctY * pieceSize;
-
-        const currentX = el.offsetLeft;
-        const currentY = el.offsetTop;
-
-        const dx = currentX - correctX;
-        const dy = currentY - correctY;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-
-        const SNAP_DISTANCE = 40;
-
-        if (distance < SNAP_DISTANCE) {
-            el.style.left = correctX + "px";
-            el.style.top = correctY + "px";
-            el.dataset.locked = "true";
-            el.style.cursor = "default";
-            el.style.border = "2px solid magenta";
-        }
-    }
-
-    // Mouse events
-    el.addEventListener("mousedown", start);
-    document.addEventListener("mousemove", move);
-    document.addEventListener("mouseup", end);
-
-    // Touch events
-    el.addEventListener("touchstart", start);
-    document.addEventListener("touchmove", move);
-    document.addEventListener("touchend", end);
-}
-
-</script>
-
+    <script src="script.js" defer></script>
 </body>
 </html>

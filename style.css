@@ -1,0 +1,38 @@
+body {
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+    touch-action: none;
+    color: #f1faee;
+}
+
+#board {
+    width: 300px;
+    height: 300px;
+    margin: auto;
+    position: relative;
+    background-color: #457b9d;
+    border: 2px solid #022543;
+}
+
+table {
+    border-collapse: collapse;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+td {
+    width: 100px;
+    height: 100px;
+
+}
+
+.piece {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    background-image: url('bg.png');
+    background-size: 300px 300px;
+    cursor: move;
+    border: 1px solid #022543;
+}
