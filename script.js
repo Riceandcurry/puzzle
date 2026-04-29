@@ -71,12 +71,15 @@ function makeDraggable(el) {
         const SNAP_DISTANCE = 40;
 
         if (distance < SNAP_DISTANCE) {
+            el.style.zIndex = "0";
             el.style.left = correctX + "px";
             el.style.top = correctY + "px";
             el.dataset.locked = "true";
             el.style.cursor = "default";
             el.style.border = "2px solid #022543";
+            
         }
+        
     }
 
     // Mouse events for desktop

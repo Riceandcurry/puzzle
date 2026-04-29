@@ -35,4 +35,6 @@ td {
     background-size: 300px 300px;
     cursor: move;
     border: 1px solid #022543;
+    z-index: 1;
 }
+
