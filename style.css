@@ -31,7 +31,6 @@ td {
     width: 100px;
     height: 100px;
     position: absolute;
-    background-image: url('bg.png');
     background-size: 300px 300px;
     cursor: move;
     border: 1px solid #022543;

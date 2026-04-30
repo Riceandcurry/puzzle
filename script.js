@@ -2,8 +2,10 @@ const board = document.getElementById("board");
 const pieceSize = 100;
 
 const image = new Image();
-image.onload = createPieces;
-image.src = "bg.png";
+//image.src = "image.png";
+let currentImage = "image.png";
+createPieces();
+
 
 function createPieces() {
     for (let y = 0; y < 3; y++) {
@@ -15,7 +17,7 @@ function createPieces() {
             piece.dataset.correctX = x;
             piece.dataset.correctY = y;
             piece.dataset.locked = "false";
-
+            piece.style.backgroundImage = `url(${currentImage})`;
             piece.style.backgroundPosition = `-${x * pieceSize}px -${y * pieceSize}px`;
 
             piece.style.left = Math.random() * 100 + "px";
@@ -91,5 +93,17 @@ function makeDraggable(el) {
     el.addEventListener("touchstart", start);
     document.addEventListener("touchmove", move);
     document.addEventListener("touchend", end);
+}
+
+function switchImage() {
+    currentImage = currentImage === "bg.png" ? "image.png" : "bg.png";
+    updatePiecesImage();
+}
+
+function updatePiecesImage() {
+    const pieces = document.querySelectorAll(".piece");
+    pieces.forEach(piece => {
+        piece.style.backgroundImage = `url(${currentImage})`;
+    });
 }
 
