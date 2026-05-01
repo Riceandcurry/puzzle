@@ -8,34 +8,52 @@
 </head>
 
 <body>
-    <div style="background-color: rgba(168, 218, 220, 0.5); border-radius: 15px; padding: 100px, 100px,100px , 100px;">
+    <div
+        style="background-color: rgba(168, 218, 220, 0.5); border-radius: 15px; padding-bottom: 1px; padding-top: 1px;">
         <h2>PUZZLE GAME</h2>
         <p>Drag pieces into the correct spots</p>
     </div>
-    <div id="board">
-        <table>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-        </table>
+    <div>
+        <div id="board">
+            <table>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
     </div>
+    <div id="winPopup" class="popup">
+        <div class="popup-box">
+            <h2> Congrats!</h2>
+            <p>You completed the puzzle!</p>
+            <button class="button-54" onclick="closePopup()">Play Again</button>
+        </div>
+    </div>
+    <canvas id="confetti" style="display: none;"></canvas>
 
     <div style="padding-top: 50px;">
-        <button class="button-54" role="button" onclick="switchImage()" >toggle example image</button>
+        <button class="button-54" role="button" onclick="switchImage()">toggle example image</button>
     </div>
 
     <script src="script.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
 </body>
-</html> 
+
+</html>
+
+
+
+
+

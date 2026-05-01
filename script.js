@@ -1,9 +1,13 @@
 const board = document.getElementById("board");
 const pieceSize = 100;
+const canvas = document.querySelector("#confetti");
 
+const jsConfetti = new JSConfetti()
 const image = new Image();
 //image.src = "image.png";
 let currentImage = "image.png";
+let peicesCount = 0;
+let totalPeices = 9;
 createPieces();
 
 
@@ -20,11 +24,8 @@ function createPieces() {
             piece.style.backgroundImage = `url(${currentImage})`;
             piece.style.backgroundPosition = `-${x * pieceSize}px -${y * pieceSize}px`;
 
-            piece.style.left = Math.random() * 100 + "px";
-            piece.style.top = Math.random() * 100 + "px";
-
+            placeRandom(piece);
             makeDraggable(piece);
-
             board.appendChild(piece);
         }
     }
@@ -79,9 +80,18 @@ function makeDraggable(el) {
             el.dataset.locked = "true";
             el.style.cursor = "default";
             el.style.border = "2px solid #022543";
-            
+            flashPiece(el);
+            console.log("added 1");
+            peicesCount++;
+
         }
-        
+
+        if (peicesCount == totalPeices) {
+            jsConfetti.addConfetti();
+            console.log(peicesCount);
+            setTimeout(showPopup, 200);
+        }
+
     }
 
     // Mouse events for desktop
@@ -98,12 +108,36 @@ function makeDraggable(el) {
 function switchImage() {
     currentImage = currentImage === "bg.png" ? "image.png" : "bg.png";
     updatePiecesImage();
+
+
 }
 
 function updatePiecesImage() {
     const pieces = document.querySelectorAll(".piece");
     pieces.forEach(piece => {
         piece.style.backgroundImage = `url(${currentImage})`;
+        placeRandom(piece);
     });
 }
 
+function flashPiece(piece, duration = 500) {
+    piece.classList.add("flash");
+
+    setTimeout(() => {
+        piece.classList.remove("flash");
+    }, duration);
+}
+
+function placeRandom(piece) {
+    piece.style.left = Math.random() * 200 + "px";
+    piece.style.top = Math.random() * 200 + "px";
+}
+
+function showPopup() {
+document.getElementById("winPopup").classList.add("show");
+}
+
+function closePopup() {
+document.getElementById("winPopup").classList.remove("show");
+location.reload(); 
+}
